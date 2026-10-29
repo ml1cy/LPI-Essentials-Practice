@@ -59,6 +59,7 @@
   {
     "id": 5,
     "question": "Which of the following commands can be used to resolve a DNS name to an IP address?",
+    "code": true,
     "options": [
       "dnsname",
       "query",
@@ -72,7 +73,7 @@
   },
   {
     "id": 6,
-    "question": "What information can be displayed by top?",
+    "question": "What information can be displayed by `top`?",
     "options": [
       "User accounts, ordered by the number of files.",
       "Running processes, ordered by CPU or RAM consumption.",
@@ -86,41 +87,43 @@
   },
   {
     "id": 7,
-    "question": "Which of the following outputs comes from the command free?",
+    "question": "Which of the following outputs comes from the command `free`?",
+    "code": true,
     "options": [
-      "A. 21:04 up 14 dats, 7:43, 3 users, load average: 0.89, 1.00, 0.99",
-      "avg-cpu:  %user   %nice %system %iowait  %steal   %idle\n16.36    0.00    2.99    1.06    0.00   79.59",
-      "Filesystem      Size  Used Avail Use% Mounted on \n/dev/nvme0n1p2  468G   33G  412G   8% /",
-      "120K  /tmp",
-      "total        used        free      shared  buff/cache   available\nMem:            15Gi       2.3Gi         9Gi       910Mi       3.0Gi        11Gi\nSwap:          2.0Gi          0B       2.0Gi"
+      "21:04 up 14 days, 7:43, 3 users, load average: 0.89, 1.00, 0.99",
+      "avg-cpu:  %user   %nice %system %iowait  %steal   %idle\n          16.36    0.00    2.99    1.06    0.00   79.59",
+      "Filesystem      Size  Used Avail Use% Mounted on\n/dev/nvme0n1p2  468G   33G  412G   8% /",
+      "120K    /tmp",
+      "       total   used   free  shared  buff/cache  available\nMem:    15Gi  2.3Gi    9Gi   910Mi       3.0Gi       11Gi\nSwap:  2.0Gi     0B  2.0Gi"
     ],
     "answer": [
-      "total        used        free      shared  buff/cache   available\nMem:            15Gi       2.3Gi         9Gi       910Mi       3.0Gi        11Gi\nSwap:          2.0Gi          0B       2.0Gi"
+      "       total   used   free  shared  buff/cache  available\nMem:    15Gi  2.3Gi    9Gi   910Mi       3.0Gi       11Gi\nSwap:  2.0Gi     0B  2.0Gi"
     ]
   },
   {
     "id": 8,
-    "question": "What is true about the dmesg command? (Choose two.)",
+    "question": "What is true about the `dmesg` command? (Choose two.)",
     "options": [
       "It might not display older information because it was overwritten by newer information.",
       "It sends messages to the command lines of all current user sessions.",
       "It traces the execution of a command and shows each step the program carries out.",
-      "It displays the content of the Linux kernel\u2019s ring buffer.",
+      "It displays the content of the Linux kernel’s ring buffer.",
       "It immediately outputs all new messages written to the system journal."
     ],
     "answer": [
-      "It displays the content of the Linux kernel\u2019s ring buffer.",
+      "It displays the content of the Linux kernel’s ring buffer.",
       "It might not display older information because it was overwritten by newer information."
     ]
   },
   {
     "id": 9,
-    "question": "Which of the following outputs could stem from the command last?",
+    "question": "Which of the following outputs could stem from the command `last`?",
+    "code": true,
     "options": [
-      "1 ls\n 2 cat text.txt\n 3 logout",
+      "1  ls\n2  cat text.txt\n3  logout",
       "Password for user last changed at Sat Mar 31 16:38:57 EST 2018",
       "Last login: Fri Mar 23 10:56:39 2018 from server.example.com",
-      "EXT4-fs(dm7): mountes filesystem with ordered data mode. Opts: (null)",
+      "EXT4-fs (dm-7): mounted filesystem with ordered data mode. Opts: (null)",
       "root tty2 Wed May 17 21:11 - 21:11 (00:00)"
     ],
     "answer": [
@@ -131,7 +134,7 @@
     "id": 10,
     "question": "What is true about the owner of a file?",
     "options": [
-      "The user owning a file must be a member of the file\u2019s group.",
+      "The user owning a file must be a member of the file’s group.",
       "The owner of a file cannot be changed once it is assigned to an owner.",
       "Each file is owned by exactly one user and one group.",
       "The owner of a file always has full permissions when accessing the file.",
@@ -144,6 +147,7 @@
   {
     "id": 11,
     "question": "What is the UID of the user root?",
+    "code": true,
     "options": [
       "255",
       "0",
@@ -157,12 +161,13 @@
   },
   {
     "id": 12,
-    "question": "Which permissions are set on a regular file once the permissions have been modified with the command chmod 654 file.txt?",
+    "question": "Which permissions are set on a regular file once the permissions have been modified with the command `chmod 654 file.txt`?",
+    "code": true,
     "options": [
-      "d\u2014wxr-x--",
+      "d--wxr-x--",
       "drw-r-xr--",
-      "\u2013rwxrw---x",
-      "\u2013wxr-x--x",
+      "-rwxrw---x",
+      "--wxr-x--x",
       "-rw-r-xr--"
     ],
     "answer": [
@@ -171,7 +176,8 @@
   },
   {
     "id": 13,
-    "question": "Which of the following tar options handle compression? (Choose two.)",
+    "question": "Which of the following `tar` options handle compression? (Choose two.)",
+    "code": true,
     "options": [
       "-z",
       "-g",
@@ -186,7 +192,8 @@
   },
   {
     "id": 14,
-    "question": "Which of the following permissions are set on the /tmp/ directory?",
+    "question": "Which of the following permissions are set on the `/tmp/` directory?",
+    "code": true,
     "options": [
       "rwX",
       "rwxrwxrwt",
@@ -200,51 +207,54 @@
   },
   {
     "id": 15,
-    "question": "What information is stored in /etc/passwd? (Choose three.)",
+    "question": "What information is stored in `/etc/passwd`? (Choose three.)",
     "options": [
-      "The user\u2019s default shell",
-      "The user\u2019s storage space limit",
+      "The user’s default shell",
+      "The user’s storage space limit",
       "The username",
       "The numerical user ID",
       "The encrypted password"
     ],
     "answer": [
-      "The user\u2019s default shell",
+      "The user’s default shell",
       "The username",
       "The numerical user ID"
     ]
   },
   {
     "id": 16,
-    "question": "Which command adds the new user tux and creates the user\u2019s home directory with default configuration files?",
+    "question": "Which command adds the new user `tux` and creates the user’s home directory with default configuration files?",
+    "code": true,
     "options": [
-      "useradd \u2013m tux",
+      "useradd -m tux",
       "defaultuser tux",
-      "useradd \u2013o default tux",
-      "passwd \u2013a tux",
+      "useradd -o default tux",
+      "passwd -a tux",
       "usercreate tux"
     ],
     "answer": [
-      "useradd \u2013m tux"
+      "useradd -m tux"
     ]
   },
   {
     "id": 17,
-    "question": "Which of the following commands creates an archive file work.tar from the contents of the directory ./work/?",
+    "question": "Which of the following commands creates an archive file `work.tar` from the contents of the directory `./work/`?",
+    "code": true,
     "options": [
       "tar work > work.tar",
       "tar work.tar < ./work/",
       "tar --new work.tar ./work/",
-      "tar \u2013cf work.tar ./work/",
-      "tar \u2013create work.tgz \u2013content ./work/"
+      "tar -cf work.tar ./work/",
+      "tar --create work.tgz --content ./work/"
     ],
     "answer": [
-      "tar \u2013cf work.tar ./work/"
+      "tar -cf work.tar ./work/"
     ]
   },
   {
     "id": 18,
-    "question": "The current directory contains the following file: -rwxr-xr-x 1 root root 859688 Feb 7 08:15 test.sh Given that the file is a valid shell script, how can this script be executed? (Choose two.)",
+    "question": "The current directory contains the following file:\n\n```\n-rwxr-xr-x 1 root root 859688 Feb  7 08:15 test.sh\n```\n\nGiven that the file is a valid shell script, how can this script be executed? (Choose two.)",
+    "code": true,
     "options": [
       "bash test.sh",
       "${test.sh}",
@@ -259,7 +269,8 @@
   },
   {
     "id": 19,
-    "question": "Which of the following keys can be pressed to exit less?",
+    "question": "Which of the following keys can be pressed to exit `less`?",
+    "code": true,
     "options": [
       "l",
       "e",
@@ -273,32 +284,33 @@
   },
   {
     "id": 20,
+    "type": "text",
     "question": "What keyword is used in a shell script to begin a loop? (Specify one keyword only, without any additional information.)",
-    "options": [
-      "for",
-      "forloop"
-    ],
     "answer": [
-      "for"
+      "for",
+      "while",
+      "until"
     ]
   },
   {
     "id": 21,
-    "question": "Which of the following commands will search for the file foo.txt under the directory /home?",
+    "question": "Which of the following commands will search for the file `foo.txt` under the directory `/home`?",
+    "code": true,
     "options": [
-      "find /home \u2013 file foo.txt",
-      "find /home \u2013name foo.txt",
+      "find /home -file foo.txt",
+      "find /home -name foo.txt",
       "find /home foo.txt",
-      "search /home \u2013file foo.txt",
-      "search /home foo. txt"
+      "search /home -file foo.txt",
+      "search /home foo.txt"
     ],
     "answer": [
-      "find /home \u2013name foo.txt"
+      "find /home -name foo.txt"
     ]
   },
   {
     "id": 22,
-    "question": "A directory contains the following files: a.txt and b.txt, What would be the output of the following shell script? for file in *.txt",
+    "question": "A directory contains the following files:\n\n```\na.txt\nb.txt\nc.cav\n```\n\nWhat would be the output of the following shell script?\n\n```\nfor file in *.txt\ndo\n  echo $file\ndone\n```",
+    "code": true,
     "options": [
       "a b",
       "*.txt",
@@ -312,21 +324,22 @@
   },
   {
     "id": 23,
-    "question": "The current directory contains the following file: -rw-r\u2014r\u2014 1 root exec 24551 Apr 2 12:36 test.sh The file contains a valid shell script, but executing this file using ./test.sh leads to this error: bash: ./test.sh: Permission denied What should be done in order to successfully execute the script?",
+    "question": "The current directory contains the following file:\n\n```\n-rw-r--r-- 1 root exec 24551 Apr  2 12:36 test.sh\n```\n\nThe file contains a valid shell script, but executing this file using `./test.sh` leads to this error:\n\n```\nbash: ./test.sh: Permission denied\n```\n\nWhat should be done in order to successfully execute the script?",
     "options": [
-      "The file\u2019s extension should be changed from .sh to .bin.",
-      "The script should be run using #!./test. sh instead of ./test.sh.",
-      "The execute bit should be set in the file\u2019s permissions.",
-      "The user executing the script should be added to the exec group.",
-      "The SetUID bit should be set in the file\u2019s permissions"
+      "The file’s extension should be changed from `.sh` to `.bin`.",
+      "The script should be run using `#!./test.sh` instead of `./test.sh`.",
+      "The execute bit should be set in the file’s permissions.",
+      "The user executing the script should be added to the `exec` group.",
+      "The SetUID bit should be set in the file’s permissions."
     ],
     "answer": [
-      "The execute bit should be set in the file\u2019s permissions."
+      "The execute bit should be set in the file’s permissions."
     ]
   },
   {
     "id": 24,
-    "question": "Which of the following commands sorts the output of the command export-logs?",
+    "question": "Which of the following commands sorts the output of the command `export-logs`?",
+    "code": true,
     "options": [
       "export-logs < sort",
       "export-logs & sort",
@@ -358,9 +371,9 @@
     "options": [
       "On a removable SD card which is put into the Raspberry Pi.",
       "On rewritable flash storage which is built into the Raspberry Pi.",
-      "On a read only partition on the Raspberry Pi\u2019s firmware, next to the BIOS.",
-      "On the master device attached to the Raspberry Pi\u2019s IDE bus.",
-      "On a Linux extension module connected to the Raspberry Pi\u2019s GPIO pins."
+      "On a read only partition on the Raspberry Pi’s firmware, next to the BIOS.",
+      "On the master device attached to the Raspberry Pi’s IDE bus.",
+      "On a Linux extension module connected to the Raspberry Pi’s GPIO pins."
     ],
     "answer": [
       "On a removable SD card which is put into the Raspberry Pi."
@@ -382,7 +395,8 @@
   },
   {
     "id": 28,
-    "question": "Which package management tool is used in Red Hat-based Linux Systems?",
+    "question": "Which package management tool is used in Red Hat-based Linux systems?",
+    "code": true,
     "options": [
       "rpm",
       "apt-get",
@@ -397,6 +411,7 @@
   {
     "id": 29,
     "question": "Which of the following characters in a shell prompt indicates the shell is running with root privileges?",
+    "code": true,
     "options": [
       "*",
       "&",
@@ -412,15 +427,15 @@
     "id": 30,
     "question": "Which of the following are typical services offered by public cloud providers? (Choose three.)",
     "options": [
-      "Internet as a Service(IaaS)",
+      "Internet as a Service (IaaS)",
       "Graphics as a Service (GaaS)",
-      "Platform as a Service(PaaS)",
-      "Infrastructure as a Service(IaaS)",
+      "Platform as a Service (PaaS)",
+      "Infrastructure as a Service (IaaS)",
       "Software as a Service (SaaS)"
     ],
     "answer": [
-      "Infrastructure as a Service(IaaS)",
-      "Platform as a Service(PaaS)",
+      "Infrastructure as a Service (IaaS)",
+      "Platform as a Service (PaaS)",
       "Software as a Service (SaaS)"
     ]
   },
@@ -454,16 +469,17 @@
   },
   {
     "id": 33,
-    "question": "Running the command rm Downloads leads to the following error: rm: cannot remove \u2018Downloads/\u2019: Is a directory Which of the following commands can be used instead to remove Downloads, assuming Downloads is empty? (Choose two.)",
+    "question": "Running the command `rm Downloads` leads to the following error:\n\n```\nrm: cannot remove 'Downloads/': Is a directory\n```\n\nWhich of the following commands can be used instead to remove `Downloads`, assuming `Downloads` is empty? (Choose two.)",
+    "code": true,
     "options": [
       "rmdir Downloads",
-      "rm \u2013r Downloads",
+      "rm -r Downloads",
       "rem Downloads",
-      "dir \u2013r Downloads",
+      "dir -r Downloads",
       "undir Downloads"
     ],
     "answer": [
-      "rm \u2013r Downloads",
+      "rm -r Downloads",
       "rmdir Downloads"
     ]
   },
@@ -483,7 +499,8 @@
   },
   {
     "id": 35,
-    "question": "Which of the following commands are used to get information on the proper use of ls? (Choose two.)",
+    "question": "Which of the following commands are used to get information on the proper use of `ls`? (Choose two.)",
+    "code": true,
     "options": [
       "option ls",
       "info ls",
@@ -499,6 +516,7 @@
   {
     "id": 36,
     "question": "Which of the following directories contains information, documentation and example configuration files for installed software packages?",
+    "code": true,
     "options": [
       "/usr/share/doc/",
       "/etc/defaults/",
@@ -512,7 +530,8 @@
   },
   {
     "id": 37,
-    "question": "A user is currently in the directory /home/user/Downloads/ and runs the command ls ../Documents/ Assuming it exists, which directory\u2019s content is displayed?",
+    "question": "A user is currently in the directory `/home/user/Downloads/` and runs the command `ls ../Documents/`. Assuming it exists, which directory’s content is displayed?",
+    "code": true,
     "options": [
       "/home/user/Documents/Downloads/",
       "/home/user/Documents/",
@@ -526,21 +545,23 @@
   },
   {
     "id": 38,
-    "question": "Which of the following commands adds the directory /new/dir/ to the PATH environment variable?",
+    "question": "Which of the following commands adds the directory `/new/dir/` to the `PATH` environment variable?",
+    "code": true,
     "options": [
-      "export PATH=/new/dir: PATH",
-      "PATH=/new/dir: PATH",
-      "export $PATH=/new/dir: $PATH",
-      "$PATH=/new/dir: $PATH",
-      "export PATH=/new/dir: $PATH"
+      "export PATH=/new/dir:PATH",
+      "PATH=/new/dir:PATH",
+      "export $PATH=/new/dir:$PATH",
+      "$PATH=/new/dir:$PATH",
+      "export PATH=/new/dir:$PATH"
     ],
     "answer": [
-      "export PATH=/new/dir: $PATH"
+      "export PATH=/new/dir:$PATH"
     ]
   },
   {
     "id": 39,
-    "question": "A directory contains the following three files: texts 1.txt texts 2.txt texts 3.csv Which command copies the two files ending in .txt to the /tmp/ directory?",
+    "question": "A directory contains the following three files:\n\n```\ntexts 1.txt\ntexts 2.txt\ntexts 3.csv\n```\n\nWhich command copies the two files ending in `.txt` to the `/tmp/` directory?",
+    "code": true,
     "options": [
       "cp. \\.txt /tmp/",
       "cp *.txt /tmp/",
@@ -554,11 +575,8 @@
   },
   {
     "id": 40,
-    "question": "FILL BLANK When typing a long command line at the shell, what single character can be used to split a command across multiple lines?",
-    "options": [
-      "/",
-      "\\"
-    ],
+    "type": "text",
+    "question": "When typing a long command line at the shell, what single character can be used to split a command across multiple lines?",
     "answer": [
       "\\"
     ]
@@ -566,6 +584,7 @@
   {
     "id": 41,
     "question": "Which of the following DNS record types hold an IP address? (Choose two.)",
+    "code": true,
     "options": [
       "NS",
       "AAAA",
@@ -581,6 +600,7 @@
   {
     "id": 42,
     "question": "Which of the following values could be a process ID on Linux?",
+    "code": true,
     "options": [
       "/bin/bash",
       "60b503cd-019e-4300-a7be-922f074ef5ce",
@@ -609,6 +629,7 @@
   {
     "id": 44,
     "question": "Which of the following devices represents a hard disk partition?",
+    "code": true,
     "options": [
       "/dev/ttyS0",
       "/dev/sata0",
@@ -626,7 +647,7 @@
     "options": [
       "Drivers are regular Linux programs which have to be run by the user who wants to use a device.",
       "Drivers are not used by Linux because the BIOS handles all access to hardware on behalf of Linux.",
-      "Drivers are stored on their devices and are copied by the Linux kernel when a new device is attached",
+      "Drivers are stored on their devices and are copied by the Linux kernel when a new device is attached.",
       "Drivers are downloaded from the vendor's driver repository when a new device is attached.",
       "Drivers are either compiled into the Linux kernel or are loaded as kernel modules."
     ],
@@ -636,10 +657,10 @@
   },
   {
     "id": 46,
-    "question": "What can be found in the /proc/ directory?",
+    "question": "What can be found in the `/proc/` directory?",
     "options": [
       "One directory per installed program.",
-      "One directory per installed program.",
+      "One device file per hardware device.",
       "One file per existing user account.",
       "One directory per running process.",
       "One log file per running service."
@@ -650,7 +671,7 @@
   },
   {
     "id": 47,
-    "question": "A new server needs to be installed to host services for a period of several years. Throughout this time, the server should receive important\nsecurity updates from its Linux distribution.\nWhich of the following Linux distributions meet these requirements? (Choose two.)",
+    "question": "A new server needs to be installed to host services for a period of several years. Throughout this time, the server should receive important security updates from its Linux distribution. Which of the following Linux distributions meet these requirements? (Choose two.)",
     "options": [
       "Ubuntu Linux LTS",
       "Fedora Linux",
@@ -666,6 +687,7 @@
   {
     "id": 48,
     "question": "Which of the following directories must be mounted with read and write access if it resides on its own dedicated file system?",
+    "code": true,
     "options": [
       "/opt",
       "/lib",
@@ -679,7 +701,8 @@
   },
   {
     "id": 49,
-    "question": "The ownership of the file doku.odt should be changed. The new owner is named tux. Which command accomplishes this change?",
+    "question": "The ownership of the file `doku.odt` should be changed. The new owner is named `tux`. Which command accomplishes this change?",
+    "code": true,
     "options": [
       "chmod u=tux doku.odt",
       "newuser doku.odt tux",
@@ -695,7 +718,7 @@
     "id": 50,
     "question": "What happens to a file residing outside the home directory when the file owner's account is deleted? (Choose two.)",
     "options": [
-      "During a file system check, the file is moved to /lost +found.",
+      "During a file system check, the file is moved to `/lost+found`.",
       "The file is removed from the file system.",
       "The UID of the former owner is shown when listing the file's details.",
       "The user root is set as the new owner of the file.",
@@ -708,17 +731,17 @@
   },
   {
     "id": 51,
-    "question": "Which statements about the directory /etc/skel are correct? (Choose two.)",
+    "question": "Which statements about the directory `/etc/skel` are correct? (Choose two.)",
     "options": [
       "The personal user settings of root are stored in this directory.",
       "The files from the directory are copied to the home directory of the new user when starting the system.",
       "The files from the directory are copied to the home directory of a new user when the account is created.",
-      "The directory contains a default set of configuration files used by the useradd command.",
+      "The directory contains a default set of configuration files used by the `useradd` command.",
       "The directory contains the global settings for the Linux system."
     ],
     "answer": [
       "The files from the directory are copied to the home directory of a new user when the account is created.",
-      "The directory contains a default set of configuration files used by the useradd command."
+      "The directory contains a default set of configuration files used by the `useradd` command."
     ]
   },
   {
@@ -737,7 +760,8 @@
   },
   {
     "id": 53,
-    "question": "Which files are the source of the information in the following output? (Choose two.) uid=1000 (bob) gid=1000 (bob) groups=1000 (bob), 10\n(wheel), 150 (wireshark), 989 (docker), 1001 (libvirt)",
+    "question": "Which files are the source of the information in the following output? (Choose two.)\n\n```\nuid=1000(bob) gid=1000(bob) groups=1000(bob),10(wheel),150(wireshark),989(docker),1001(libvirt)\n```",
+    "code": true,
     "options": [
       "/etc/id",
       "/etc/passwd",
@@ -752,7 +776,7 @@
   },
   {
     "id": 54,
-    "question": "Which of the following tasks can the command passwd accomplish? (Choose two.)",
+    "question": "Which of the following tasks can the command `passwd` accomplish? (Choose two.)",
     "options": [
       "Change a user's username.",
       "Change a user's password.",
@@ -767,7 +791,7 @@
   },
   {
     "id": 55,
-    "question": "What is true about the su command?",
+    "question": "What is true about the `su` command?",
     "options": [
       "It is the default shell of the root account.",
       "It can only be used by the user root.",
@@ -781,12 +805,11 @@
   },
   {
     "id": 56,
-    "question": "FILL BLANK -\nWhat parameter of ls prints a recursive listing of a directory's content? (Specify ONLY the option name without any values or parameters.)",
-    "options": [
-      "The answer is 'ls -R' ;)"
-    ],
+    "type": "text",
+    "question": "What parameter of `ls` prints a recursive listing of a directory’s content? (Specify only the option name without any values or parameters.)",
     "answer": [
-      "The answer is 'ls -R' ;)"
+      "-R",
+      "--recursive"
     ]
   },
   {
@@ -806,6 +829,7 @@
   {
     "id": 58,
     "question": "Which of the following commands shows the absolute path to the current working directory?",
+    "code": true,
     "options": [
       "who",
       "cd ..",
@@ -819,7 +843,8 @@
   },
   {
     "id": 59,
-    "question": "Which of the following commands output the content of the file Texts 2.txt? (Choose two.)",
+    "question": "Which of the following commands output the content of the file `Texts 2.txt`? (Choose two.)",
+    "code": true,
     "options": [
       "cat 'Texts 2.txt'",
       "cat -- Texts 2.txt",
@@ -835,6 +860,7 @@
   {
     "id": 60,
     "question": "Which command displays file names only and no additional information?",
+    "code": true,
     "options": [
       "ls -a",
       "ls -lh",
@@ -848,7 +874,7 @@
   },
   {
     "id": 61,
-    "question": "What is the purpose of the PATH environment variable?",
+    "question": "What is the purpose of the `PATH` environment variable?",
     "options": [
       "It allows the execution of commands without the need to know the location of the executable.",
       "It increases security by preventing commands from running in certain locations.",
@@ -862,7 +888,8 @@
   },
   {
     "id": 62,
-    "question": "Which of the following commands sets the variable USERNAME to the value bob?",
+    "question": "Which of the following commands sets the variable `USERNAME` to the value `bob`?",
+    "code": true,
     "options": [
       "set USERNAME bob",
       "$USERNAME==bob",
@@ -876,21 +903,16 @@
   },
   {
     "id": 63,
-    "question": "What command displays manual pages? (originally a FILL BLANK question)",
-    "options": [
-      "manul",
-      "man",
-      "help -m",
-      "lsman",
-      "info --manual"
-    ],
+    "type": "text",
+    "question": "What command displays manual pages? (Specify only the command name.)",
     "answer": [
       "man"
     ]
   },
   {
     "id": 64,
-    "question": "Which command copies the contents of the directory /etc/, including all sub-directories, to /root/?",
+    "question": "Which command copies the contents of the directory `/etc/`, including all sub-directories, to `/root/`?",
+    "code": true,
     "options": [
       "copy /etc /root",
       "cp -r /etc/* /root",
@@ -904,7 +926,8 @@
   },
   {
     "id": 65,
-    "question": "Which of the following commands puts the lines of the file data.csv into alphabetical order?",
+    "question": "Which of the following commands puts the lines of the file `data.csv` into alphabetical order?",
+    "code": true,
     "options": [
       "a..z data.csv",
       "sort data.csv",
@@ -919,20 +942,22 @@
   {
     "id": 66,
     "question": "Which of the following examples shows the general structure of a for loop in a shell script?",
+    "code": true,
     "options": [
       "for *.txt as file => echo $file",
       "for *.txt ( echo $i )",
-      "for file in *.txt do echo $i done",
+      "for file in *.txt; do echo $file; done",
       "for ls *.txt exec {} \\;",
       "foreach @{file} { echo $i }"
     ],
     "answer": [
-      "for file in *.txt do echo $i done"
+      "for file in *.txt; do echo $file; done"
     ]
   },
   {
     "id": 67,
     "question": "Which operator in a regular expression matches the preceding character either zero or one time?",
+    "code": true,
     "options": [
       "?",
       "*",
@@ -946,7 +971,7 @@
   },
   {
     "id": 68,
-    "question": "The file script.sh in the current directory contains the following content:\n#!/bin/bash\necho $MYVAR\nThe following commands are used to execute this script:\n\n\nMYVAR=value -\n./script.sh\nThe result is an empty line instead of the content of the variable MYVAR. How should MYVAR be set in order to make script.sh display the content\nof MYVAR?",
+    "question": "The file `script.sh` in the current directory contains the following content:\n\n```\n#!/bin/bash\necho $MYVAR\n```\n\nThe following commands are used to execute this script:\n\n```\nMYVAR=value\n./script.sh\n```\n\nThe result is an empty line instead of the content of the variable `MYVAR`. How should `MYVAR` be set in order to make `script.sh` display the content of `MYVAR`?",
     "options": [
       "!MYVAR=value",
       "env MYVAR=value",
@@ -961,6 +986,7 @@
   {
     "id": 69,
     "question": "What is the return value of a shell script after successful execution?",
+    "code": true,
     "options": [
       "1",
       "0",
@@ -974,7 +1000,8 @@
   },
   {
     "id": 70,
-    "question": "Which of the following commands creates the ZIP archive poems.zip containing all files in the current directory whose names end in .txt?",
+    "question": "Which of the following commands creates the ZIP archive `poems.zip` containing all files in the current directory whose names end in `.txt`?",
+    "code": true,
     "options": [
       "zip *.txt > poems.zip",
       "zcat *.txt poems.zip",
@@ -1003,7 +1030,8 @@
   },
   {
     "id": 72,
-    "question": "Which of the following commands extracts the contents of the compressed archive file1.tar.gz?",
+    "question": "Which of the following commands extracts the contents of the compressed archive `file1.tar.gz`?",
+    "code": true,
     "options": [
       "tar -czf file1.tar.gz",
       "ztar file1.tar.gz",
@@ -1017,13 +1045,14 @@
   },
   {
     "id": 73,
-    "question": "Which of the following commands finds all lines in the file operating-systems.txt which contain the term linux, regardless of the case?",
+    "question": "Which of the following commands finds all lines in the file `operating-systems.txt` which contain the term `linux`, regardless of the case?",
+    "code": true,
     "options": [
       "igrep linux operating-systems.txt",
       "less -i linux operating-systems.txt",
       "grep -i linux operating-systems.txt",
       "cut linux operating-systems.txt",
-      "cut [Ll] [Ii] [Nn] [Uu] [Xx] operating-systems.txt"
+      "cut [Ll][Ii][Nn][Uu][Xx] operating-systems.txt"
     ],
     "answer": [
       "grep -i linux operating-systems.txt"
@@ -1088,7 +1117,7 @@
   },
   {
     "id": 78,
-    "question": "How is a new Linux computing instance provisioned in an laaS cloud?",
+    "question": "How is a new Linux computing instance provisioned in an IaaS cloud?",
     "options": [
       "The standard Linux installer has to be run through a remote console.",
       "After buying a Linux distribution, its vendor delivers it to a cloud instance.",
