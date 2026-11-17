@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 # Builds the Linux system that runs in the practice terminal:
 #
-#   terminal/image/bzImage          32-bit Linux kernel (kernel.config)
-#   terminal/image/rootfs.cpio.gz   initramfs: static BusyBox (busybox.config),
-#                                   the files in rootfs/ and the practice users
+#   terminal/image/bzimage.js   32-bit Linux kernel (kernel.config)
+#   terminal/image/rootfs.js    initramfs: static BusyBox (busybox.config),
+#                               the files in rootfs/ and the practice users
+#
+# Both are base64 inside .js files (see pack.sh) so any web host serves them.
+# The plain bzImage and rootfs.cpio.gz stay in the work directory.
 #
 # Runs on Ubuntu 24.04, as any user. Install the build dependencies first:
 #
@@ -78,7 +81,7 @@ cp -a "$here/rootfs/." "$root/"
 mkdir -p "$root/bin"
 cp busybox/busybox "$root/bin/busybox"
 
-fakeroot -- bash -euo pipefail -s "$root" "$out/rootfs.cpio.gz" <<'STAGE'
+fakeroot -- bash -euo pipefail -s "$root" "$work/rootfs.cpio.gz" <<'STAGE'
 root=$1 archive=$2
 cd "$root"
 
@@ -115,6 +118,9 @@ find . -exec touch -h -d "@$SOURCE_DATE_EPOCH" {} +
 find . | LC_ALL=C sort | cpio --quiet -o -H newc --reproducible | gzip -9n > "$archive"
 STAGE
 
-cp linux/arch/x86/boot/bzImage "$out/bzImage"
+echo "==> Packing"
+cp linux/arch/x86/boot/bzImage "$work/bzImage"
+"$here/pack.sh" "$work/bzImage" bzImage "$out/bzimage.js"
+"$here/pack.sh" "$work/rootfs.cpio.gz" rootfs.cpio.gz "$out/rootfs.js"
 echo "==> Done"
-ls -l "$out"
+ls -l "$work/bzImage" "$work/rootfs.cpio.gz" "$out"

@@ -1232,6 +1232,7 @@ body.has-terminal {
 }
 
 .terminal-title {
+  flex: none;
   font-size: 0.9375rem;
   font-weight: 700;
 }
@@ -1268,7 +1269,6 @@ body.has-terminal {
 
 .terminal-status[data-state="error"] {
   color: #ff97a3;
-  white-space: normal;
 }
 
 .terminal-status[data-state="error"]::before {
@@ -1313,6 +1313,16 @@ body.has-terminal {
 .terminal-mount {
   width: 100%;
   height: 100%;
+}
+
+.terminal-message {
+  max-width: 34rem;
+  margin: 0.4rem 0.6rem 0 0;
+  padding: 0.75rem 1rem;
+  border-left: 3px solid #f4707f;
+  border-radius: var(--radius-sm);
+  background: rgb(244 112 127 / 0.1);
+  font-size: 0.9375rem;
 }
 
 .terminal-mount .xterm-viewport {

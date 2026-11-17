@@ -47,8 +47,9 @@ displayed with [xterm.js](https://xtermjs.org/). Commands really run, so permiss
 pipes, globbing, archives and environment variables behave the way they do on any Linux
 machine.
 
-- It downloads about 5 MB the first time it's opened and boots in a few seconds. Until
-  then the quiz loads nothing extra.
+- It downloads about 3 MB the first time it's opened (6 MB if your host doesn't
+  compress JavaScript) and boots in a few seconds. Until then the quiz loads nothing
+  extra.
 - You're logged in as `student` (password `student`). The root password is `root`: use
   `su -`, or `sudo COMMAND`, which asks for the root password.
 - The home directory has practice files that match exam questions, such as a script
@@ -79,6 +80,22 @@ the system, such as the practice files or users, edit `rootfs/` and run:
 terminal/build/build.sh
 ```
 
+### Why the binaries are `.js` files
+
+The emulator, BIOS, kernel and file system are binary files, but they're stored as
+base64 inside `.js` files: `terminal/vendor/v86/v86-wasm.js`, `seabios.js`,
+`vgabios.js`, and `terminal/image/bzimage.js`, `rootfs.js`. Some web hosts refuse to
+serve `.wasm`, `.bin` or extensionless files, but every host serves `.js`, and most
+compress it, so the download stays small. `terminal/terminal.js` fetches and decodes
+them. `terminal/build/pack.sh` makes them:
+
+```bash
+terminal/build/pack.sh v86.wasm v86.wasm terminal/vendor/v86/v86-wasm.js
+```
+
+If the terminal says a file didn't download, check that the whole `terminal/` folder
+was published with the site.
+
 ## Project layout
 
 ```text
@@ -88,9 +105,9 @@ app.js              Quiz logic: loading, rendering, scoring, saving progress
 lpi_questions.json  The question bank
 terminal/
   terminal.js       Terminal panel: loads and runs the emulator on first open
-  image/            Linux kernel (bzImage) and root file system (rootfs.cpio.gz)
+  image/            Linux kernel and root file system, packed as .js files
   build/            Script, configuration and files that produce image/
-  vendor/           v86 emulator and BIOS, xterm.js
+  vendor/           v86 emulator and BIOS (packed as .js), xterm.js
 ```
 
 ## Question format
@@ -145,5 +162,7 @@ as also accepted.
 | Linux kernel | 6.8.12 | GPL-2.0 | Ubuntu 24.04 package [`linux-source-6.8.0`](https://launchpad.net/ubuntu/+source/linux) |
 | BusyBox | 1.36.1 | GPL-2.0 | Ubuntu 24.04 source package [`busybox` 1:1.36.1-6ubuntu3.1](https://launchpad.net/ubuntu/+source/busybox) |
 
-License texts for the vendored files are in `terminal/vendor/`. The kernel and BusyBox
-binaries can be rebuilt from the sources above with `terminal/build/build.sh`.
+License texts for the vendored files are in `terminal/vendor/`. `v86.wasm`, `seabios.bin`
+and `vgabios.bin` are stored unchanged, base64-encoded, in `v86-wasm.js`, `seabios.js` and
+`vgabios.js`. The kernel and BusyBox binaries can be rebuilt from the sources above with
+`terminal/build/build.sh`.

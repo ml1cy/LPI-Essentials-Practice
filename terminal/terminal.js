@@ -8,6 +8,10 @@
  * machine keeps running while the panel is open and pauses while it's closed,
  * so files made during a quiz are still there when it's reopened.
  *
+ * The emulator, BIOS, kernel and file system are binary files packed as base64
+ * in .js files (terminal/build/pack.sh): some web hosts refuse .wasm, .bin or
+ * extensionless files, but they all serve .js.
+ *
  * Serial port 0 is the console. Serial port 1 is a small control channel: the
  * guest says "ready" on it after boot, and the page sends "ROWS COLS" lines on
  * it to keep the console size in step with the panel (terminal/build/rootfs/
@@ -17,12 +21,14 @@
   const BASE = 'terminal/';
   const SCRIPTS = ['vendor/xterm/xterm.js', 'vendor/xterm/addon-fit.js', 'vendor/v86/libv86.js'];
   const STYLES = ['vendor/xterm/xterm.css'];
+  const FILES = {
+    'v86.wasm': 'vendor/v86/v86-wasm.js',
+    'seabios.bin': 'vendor/v86/seabios.js',
+    'vgabios.bin': 'vendor/v86/vgabios.js',
+    'bzImage': 'image/bzimage.js',
+    'rootfs.cpio.gz': 'image/rootfs.js',
+  };
   const MACHINE = {
-    wasm_path: `${BASE}vendor/v86/v86.wasm`,
-    bios: { url: `${BASE}vendor/v86/seabios.bin` },
-    vga_bios: { url: `${BASE}vendor/v86/vgabios.bin` },
-    bzimage: { url: `${BASE}image/bzImage` },
-    initrd: { url: `${BASE}image/rootfs.cpio.gz` },
     cmdline: 'console=ttyS0 quiet',
     // v86 loads the initrd at the 64 MB mark, so the machine needs more than that.
     memory_size: 96 * 1024 * 1024,
@@ -64,11 +70,15 @@
   const mount = $('terminalMount');
   const status = $('terminalStatus');
   const toggleBtn = $('terminalBtn');
+  const restartBtn = $('terminalRestart');
+  const message = $('terminalMessage');
   const encoder = new TextEncoder();
 
   let term = null;
   let fit = null;
   let emulator = null;
+  let files = null;         // decoded BIOS, kernel and file system, reused on restart
+  let wasmModule = null;    // compiled emulator, instantiated once per boot
   let machineReady = false; // v86 has finished initialising and can be paused
   let starting = null;   // promise while the libraries load and the machine boots
   let ready = false;     // guest control channel is up
@@ -78,14 +88,42 @@
 
   /* ---------- Loading ---------- */
 
+  const missing = path => `Make sure the whole terminal folder is published with the site (${BASE}${path}).`;
+
   function loadScript(src) {
     return new Promise((resolve, reject) => {
       const script = document.createElement('script');
       script.src = BASE + src;
       script.onload = resolve;
-      script.onerror = () => reject(new Error(`${src} didn't load`));
+      script.onerror = () => {
+        script.remove();
+        reject(new Error(`A terminal file didn’t download. ${missing(src)}`));
+      };
       document.head.append(script);
     });
+  }
+
+  // Fetches a file made by pack.sh and returns its contents as an ArrayBuffer.
+  async function fetchPacked(path) {
+    let response;
+    try {
+      response = await fetch(BASE + path);
+    } catch {
+      throw new Error('A terminal file didn’t download. Check your connection, then reload the page.');
+    }
+    if (!response.ok) {
+      throw new Error(`The server answered ${response.status} for a terminal file. ${missing(path)}`);
+    }
+    const text = await response.text();
+    const start = text.indexOf("= '") + 3;
+    const end = text.lastIndexOf("'");
+    if (start < 3 || end <= start) {
+      throw new Error(`A terminal file came back damaged. ${missing(path)}`);
+    }
+    const binary = atob(text.slice(start, end));
+    const bytes = new Uint8Array(binary.length);
+    for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+    return bytes.buffer;
   }
 
   function loadStyle(href) {
@@ -100,6 +138,15 @@
     status.dataset.state = state;
   }
 
+  // Shown in the terminal area when the machine can't start; Restart becomes Try again.
+  function showError(text) {
+    setStatus('Couldn’t start', 'error');
+    message.textContent = text;
+    message.hidden = false;
+    restartBtn.textContent = 'Try again';
+    restartBtn.title = 'Download the terminal files again';
+  }
+
   async function start() {
     if (location.protocol === 'file:') {
       throw new Error('The terminal needs the page to be served over HTTP. Run “python3 -m http.server” in the project folder and open http://localhost:8000.');
@@ -108,9 +155,28 @@
       throw new Error('This browser doesn’t support WebAssembly, which the terminal needs.');
     }
 
-    setStatus('Downloading', 'busy');
+    message.hidden = true;
+    restartBtn.textContent = 'Restart';
+    restartBtn.title = 'Restart Linux. Files you created are lost.';
     STYLES.forEach(loadStyle);
-    for (const src of SCRIPTS) await loadScript(src);
+    const total = SCRIPTS.length + Object.keys(FILES).length;
+    let done = 0;
+    let failed = false; // stop counting once one fails, so its error stays visible
+    setStatus(`Downloading 0 of ${total}`, 'busy');
+    const counted = promise => promise.then(result => {
+      if (!failed) setStatus(`Downloading ${++done} of ${total}`, 'busy');
+      return result;
+    }, err => {
+      failed = true;
+      throw err;
+    });
+    const [, entries] = await Promise.all([
+      Promise.all(SCRIPTS.map(src => counted(loadScript(src)))),
+      Promise.all(Object.entries(FILES).map(([name, path]) => counted(fetchPacked(path)).then(buffer => [name, buffer]))),
+    ]);
+    files = Object.fromEntries(entries);
+    wasmModule = await WebAssembly.compile(files['v86.wasm']);
+    delete files['v86.wasm'];
     await document.fonts?.load('14px "Atkinson Hyperlegible Mono"').catch(() => {});
 
     term = new window.Terminal({
@@ -140,18 +206,19 @@
   function boot() {
     ready = false;
     control = '';
-    emulator = new window.V86(MACHINE);
+    setStatus('Booting', 'busy');
+    emulator = new window.V86({
+      ...MACHINE,
+      wasm_fn: async env => (await WebAssembly.instantiate(wasmModule, env)).exports,
+      bios: { buffer: files['seabios.bin'] },
+      vga_bios: { buffer: files['vgabios.bin'] },
+      bzimage: { buffer: files.bzImage },
+      initrd: { buffer: files['rootfs.cpio.gz'] },
+    });
     emulator.add_listener('emulator-ready', () => {
       machineReady = true;
       if (!isOpen()) pause();
     });
-    emulator.add_listener('download-progress', e => {
-      if (!e.file_count) return;
-      const fraction = (e.file_index + (e.lengthComputable && e.total ? e.loaded / e.total : 0)) / e.file_count;
-      setStatus(`Downloading ${Math.round(fraction * 100)}%`, 'busy');
-    });
-    emulator.add_listener('download-error', () => setStatus('Download failed. Reload the page to try again.', 'error'));
-    emulator.add_listener('emulator-started', () => { if (!ready) setStatus('Booting', 'busy'); });
     emulator.add_listener('serial0-output-byte', byte => {
       if (!pending.length) requestAnimationFrame(flush);
       pending.push(byte);
@@ -211,7 +278,7 @@
     }
     if (!starting) {
       starting = start().catch(err => {
-        setStatus(err.message, 'error');
+        showError(err.message);
         starting = null;
       });
     }
@@ -231,13 +298,16 @@
     pageFocusTarget().focus({ preventScroll: true });
   }
 
-  function restart() {
+  // v86's own restart() doesn't reload the kernel, so boot a fresh machine instead.
+  async function restart() {
     if (!machineReady) return;
+    machineReady = false;
+    const old = emulator;
+    emulator = null;
+    await old.destroy();
     term.reset();
-    term.write('\x1b[2mRestarting…\x1b[0m\r\n');
-    ready = false;
-    setStatus('Booting', 'busy');
-    emulator.restart();
+    term.write('\x1b[2mRestarting Linux…\x1b[0m\r\n');
+    boot();
     term.focus();
   }
 
@@ -255,7 +325,7 @@
 
   toggleBtn.addEventListener('click', () => (isOpen() ? close() : open()));
   $('terminalClose').addEventListener('click', close);
-  $('terminalRestart').addEventListener('click', restart);
+  restartBtn.addEventListener('click', () => (term ? restart() : open()));
   document.addEventListener('keydown', e => {
     if (e.ctrlKey && e.code === 'Backquote') {
       e.preventDefault();
