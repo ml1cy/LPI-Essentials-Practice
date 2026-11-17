@@ -623,6 +623,8 @@ matchMedia('(prefers-color-scheme: dark)').addEventListener('change', updateThem
 document.addEventListener('keydown', e => {
   if (!quiz || views.quiz.hidden || $('submitDialog').open) return;
   if (e.ctrlKey || e.metaKey || e.altKey) return;
+  // Keys typed into the Linux terminal belong to the terminal.
+  if (e.target.closest('.terminal-panel')) return;
 
   const target = e.target;
   const typing = target.matches('input[type="text"], textarea');
@@ -647,6 +649,11 @@ document.addEventListener('keydown', e => {
   if (key === 'f') {
     e.preventDefault();
     toggleFlag();
+    return;
+  }
+  if (key === 't' && window.lpiTerminal) {
+    e.preventDefault();
+    window.lpiTerminal.open();
     return;
   }
   const optionIndex = OPTION_KEYS.indexOf(key);

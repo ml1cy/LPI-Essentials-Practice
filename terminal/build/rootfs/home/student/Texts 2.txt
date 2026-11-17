@@ -1,0 +1,1 @@
+You found it. Quoting ('Texts 2.txt') and escaping (Texts\ 2.txt) both work.

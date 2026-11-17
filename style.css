@@ -34,6 +34,15 @@
   --radius-sm: 6px;
   --measure: 46rem;
   --gutter: 16px;
+  --terminal-width: clamp(24rem, 40vw, 46rem);
+  --terminal-height: min(55vh, 32rem);
+
+  /* The terminal stays dark in both themes, like a console. */
+  --term-bg: #0f1a30;
+  --term-head: #13203a;
+  --term-ink: #e7ecf5;
+  --term-muted: #9ba9c2;
+  --term-line: #2c3e60;
 
   color-scheme: light;
 }
@@ -1187,6 +1196,160 @@ kbd {
   margin-top: 1.5rem;
 }
 
+/* ---------- Linux terminal ---------- */
+
+.terminal-btn[aria-expanded="true"] {
+  border-color: var(--accent);
+  color: var(--ink);
+}
+
+body.has-terminal {
+  padding-right: var(--terminal-width);
+}
+
+.terminal-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  width: var(--terminal-width);
+  border-left: 1px solid var(--term-line);
+  background: var(--term-bg);
+  color: var(--term-ink);
+}
+
+.terminal-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 3.5rem;
+  padding: 0.25rem 0.5rem 0.25rem 1rem;
+  border-bottom: 1px solid var(--term-line);
+  background: var(--term-head);
+}
+
+.terminal-title {
+  font-size: 0.9375rem;
+  font-weight: 700;
+}
+
+.terminal-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-width: 0;
+  margin-right: auto;
+  overflow: hidden;
+  color: var(--term-muted);
+  font-size: 0.8125rem;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.terminal-status:not(:empty)::before {
+  content: "";
+  flex: none;
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--term-muted);
+}
+
+.terminal-status[data-state="busy"]::before {
+  background: #f2a93b;
+}
+
+.terminal-status[data-state="ok"]::before {
+  background: #4cc79e;
+}
+
+.terminal-status[data-state="error"] {
+  color: #ff97a3;
+  white-space: normal;
+}
+
+.terminal-status[data-state="error"]::before {
+  background: #f4707f;
+}
+
+.terminal-action {
+  display: inline-grid;
+  place-items: center;
+  flex: none;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.6rem;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  background: transparent;
+  color: var(--term-muted);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.terminal-action:hover {
+  border-color: var(--term-line);
+  color: var(--term-ink);
+}
+
+.terminal-action:focus-visible {
+  outline-color: #f2a93b;
+}
+
+.terminal-close {
+  padding: 0;
+}
+
+.terminal-screen {
+  flex: 1;
+  min-height: 0;
+  padding: 0.6rem 0.25rem 0.25rem 0.85rem;
+}
+
+.terminal-mount {
+  width: 100%;
+  height: 100%;
+}
+
+.terminal-mount .xterm-viewport {
+  scrollbar-color: var(--term-line) transparent;
+}
+
+.terminal-hint {
+  padding: 0.4rem 1rem 0.55rem;
+  border-top: 1px solid var(--term-line);
+  color: var(--term-muted);
+  font-size: 0.8125rem;
+}
+
+.terminal-hint kbd {
+  border-color: var(--term-line);
+  background: var(--term-head);
+  color: var(--term-ink);
+  font-size: 0.75rem;
+}
+
+/* Below laptop width the terminal docks to the bottom instead of the side. */
+@media (max-width: 64rem) {
+  body.has-terminal {
+    padding-right: 0;
+    padding-bottom: var(--terminal-height);
+  }
+
+  .terminal-panel {
+    top: auto;
+    left: 0;
+    width: auto;
+    height: var(--terminal-height);
+    border-top: 1px solid var(--term-line);
+    border-left: 0;
+  }
+}
+
 /* ---------- Small screens ---------- */
 
 @media (max-width: 34rem) {
@@ -1237,6 +1400,23 @@ kbd {
 
   .result-actions .btn {
     flex: 1 1 100%;
+  }
+
+  .terminal-btn {
+    padding-inline: 0.5rem;
+  }
+
+  .terminal-btn .btn-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    white-space: nowrap;
+  }
+
+  .terminal-hint {
+    display: none;
   }
 }
 

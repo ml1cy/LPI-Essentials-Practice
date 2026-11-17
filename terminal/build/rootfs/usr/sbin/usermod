@@ -1,0 +1,22 @@
+#!/bin/sh
+# BusyBox has no usermod. This supports the common case of adding a user to
+# supplementary groups: usermod -aG GROUP[,GROUP] LOGIN
+usage() { echo "Usage: usermod -aG GROUP[,GROUP] LOGIN (other options aren't available here)" >&2; exit 2; }
+append=no groups=
+while getopts "aG:" opt; do
+  case $opt in
+    a) append=yes ;;
+    G) groups=$OPTARG ;;
+    *) usage ;;
+  esac
+done
+shift $((OPTIND - 1))
+[ $# -eq 1 ] && [ $append = yes ] && [ -n "$groups" ] || usage
+if [ "$(id -u)" -ne 0 ]; then
+  echo "usermod: Permission denied." >&2
+  exit 1
+fi
+IFS=,
+for group in $groups; do
+  addgroup "$1" "$group" || exit
+done

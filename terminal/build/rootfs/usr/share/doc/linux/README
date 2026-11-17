@@ -1,0 +1,4 @@
+Linux 6.8 kernel, built with a minimal configuration for this practice system.
+Built from the Ubuntu 24.04 package linux-source-6.8.0.
+License: GNU General Public License, version 2. Source code:
+https://launchpad.net/ubuntu/+source/linux

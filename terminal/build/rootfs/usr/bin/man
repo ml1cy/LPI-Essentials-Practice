@@ -1,0 +1,25 @@
+#!/bin/sh
+# This small system has no manual pages, so show the command's built-in
+# --help text instead, in a pager like the real man (press q to quit).
+[ "$1" = "-k" ] && { shift; exec apropos "$@"; }
+case $1 in [1-9]) shift ;; esac
+if [ $# -eq 0 ]; then
+  echo "What manual page do you want?" >&2
+  echo "For example, try 'man ls'." >&2
+  exit 1
+fi
+cmd=$1
+case $(type "$cmd" 2>/dev/null) in
+  *"shell builtin"*)
+    echo "$cmd is a shell builtin, so it has no manual page here. Run 'help' to list the shell's builtins." >&2
+    exit 16 ;;
+  *"not found"*|"")
+    echo "No manual entry for $cmd" >&2
+    exit 16 ;;
+esac
+{
+  echo "No manual pages are installed on this practice system."
+  echo "Showing the built-in help of $cmd instead ($cmd --help):"
+  echo
+  "$cmd" --help 2>&1
+} | less

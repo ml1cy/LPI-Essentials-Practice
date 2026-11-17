@@ -1,0 +1,10 @@
+root:x:0:
+daemon:x:1:
+bin:x:2:
+adm:x:4:student
+tty:x:5:
+wheel:x:10:student
+utmp:x:43:
+users:x:100:student
+nogroup:x:65534:
+student:x:1000:

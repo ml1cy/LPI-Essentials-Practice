@@ -1,0 +1,17 @@
+#!/bin/sh
+# BusyBox has deluser instead of userdel. Supports -r (remove the home directory).
+usage() { echo "Usage: userdel [-r] LOGIN" >&2; exit 2; }
+remove=
+while getopts "r" opt; do
+  case $opt in
+    r) remove=--remove-home ;;
+    *) usage ;;
+  esac
+done
+shift $((OPTIND - 1))
+[ $# -eq 1 ] || usage
+if [ "$(id -u)" -ne 0 ]; then
+  echo "userdel: Permission denied." >&2
+  exit 1
+fi
+exec deluser $remove "$1"

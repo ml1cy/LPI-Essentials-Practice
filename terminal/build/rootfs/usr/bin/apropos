@@ -1,0 +1,6 @@
+#!/bin/sh
+# Without manual pages there is nothing to search, so list matching command names.
+[ $# -eq 1 ] || { echo "Usage: apropos KEYWORD" >&2; exit 1; }
+found=$(busybox --list | grep -i -- "$1")
+[ -n "$found" ] || { echo "$1: nothing appropriate." >&2; exit 16; }
+echo "$found"

@@ -1,0 +1,7 @@
+# /etc/inittab: BusyBox init configuration
+::sysinit:/etc/init.d/rcS
+::respawn:/usr/libexec/term-resize
+# Log the student in on the serial console, and again after they type `exit`
+ttyS0::respawn:/bin/login -f student
+::ctrlaltdel:/sbin/reboot
+::shutdown:/bin/umount -a -r

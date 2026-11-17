@@ -1,0 +1,5 @@
+NAME="LPI Practice Linux"
+PRETTY_NAME="LPI Practice Linux (Linux 6.8, BusyBox 1.36)"
+ID=lpi-practice
+VERSION_ID=1
+HOME_URL="https://github.com/ml1cy/LPI-Essentials-Practice"

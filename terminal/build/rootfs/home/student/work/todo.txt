@@ -1,0 +1,2 @@
+- archive this directory: tar -czf work.tar.gz work/
+- list the archive: tar -tzf work.tar.gz

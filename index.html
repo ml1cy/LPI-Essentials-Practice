@@ -19,6 +19,7 @@
     } catch (e) { /* storage unavailable: follow the system theme */ }
   </script>
   <script src="app.js" defer></script>
+  <script src="terminal/terminal.js" defer></script>
 </head>
 <body>
   <header class="topbar">
@@ -29,6 +30,11 @@
         <span class="timer" id="timer" title="Time spent on this quiz">0:00</span>
         <button type="button" class="btn btn-quiet" id="exitBtn">Save and exit</button>
       </div>
+
+      <button type="button" class="btn btn-quiet terminal-btn" id="terminalBtn" aria-expanded="false" aria-controls="terminalPanel" title="Linux terminal (Ctrl+`)">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="2.5"/><path d="M7.5 9.5l2.5 2.5-2.5 2.5M12.5 14.5h4"/></svg>
+        <span class="btn-label">Terminal</span>
+      </button>
 
       <button type="button" class="icon-btn" id="themeBtn" aria-label="Switch theme">
         <svg class="icon icon-sun" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M4.9 19.1l1.8-1.8M17.3 6.7l1.8-1.8"/></svg>
@@ -54,7 +60,8 @@
       <p class="lede">
         Work through real-style questions from the 010-160 question bank. Flag anything
         you’re unsure of, then review every answer when you finish. The real exam gives
-        you 60&nbsp;minutes for 40&nbsp;questions.
+        you 60&nbsp;minutes for 40&nbsp;questions. To try a command, open the built-in
+        Linux terminal at any time.
       </p>
 
       <p class="load-error" id="loadError" role="alert" hidden></p>
@@ -86,6 +93,8 @@
           <div><dt><kbd>←</kbd> <kbd>→</kbd></dt><dd>Previous or next question</dd></div>
           <div><dt><kbd>Enter</kbd></dt><dd>Next question</dd></div>
           <div><dt><kbd>F</kbd></dt><dd>Flag for review</dd></div>
+          <div><dt><kbd>T</kbd></dt><dd>Open the Linux terminal</dd></div>
+          <div><dt><kbd>Ctrl</kbd> <kbd>`</kbd></dt><dd>Switch between the terminal and the questions</dd></div>
         </dl>
       </div>
     </section>
@@ -158,6 +167,21 @@
       </div>
     </section>
   </main>
+
+  <aside class="terminal-panel" id="terminalPanel" aria-labelledby="terminalTitle" hidden>
+    <div class="terminal-head">
+      <h2 class="terminal-title" id="terminalTitle">Linux terminal</h2>
+      <span class="terminal-status" id="terminalStatus" role="status"></span>
+      <button type="button" class="terminal-action" id="terminalRestart" title="Restart Linux. Files you created are lost.">Restart</button>
+      <button type="button" class="terminal-action terminal-close" id="terminalClose" aria-label="Close terminal" title="Close terminal">
+        <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+    <div class="terminal-screen" id="terminalScreen">
+      <div class="terminal-mount" id="terminalMount"></div>
+    </div>
+    <p class="terminal-hint"><kbd>Ctrl</kbd> <kbd>`</kbd> switches between the terminal and the questions</p>
+  </aside>
 
   <dialog class="dialog" id="submitDialog" aria-labelledby="submitDialogTitle">
     <form method="dialog">

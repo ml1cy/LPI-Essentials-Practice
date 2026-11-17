@@ -1,0 +1,4 @@
+BusyBox 1.36.1: one small binary that provides most standard Unix tools.
+Built from the Ubuntu 24.04 source package busybox 1:1.36.1-6ubuntu3.1.
+License: GNU General Public License, version 2. Source code:
+https://launchpad.net/ubuntu/+source/busybox

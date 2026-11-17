@@ -1,0 +1,7 @@
+Linux is a free and open source operating system kernel.
+Ubuntu, Debian and Fedora are Linux distributions.
+FreeBSD is not Linux, but it is open source as well.
+Windows and macOS are proprietary operating systems.
+Android is built on the linux kernel.
+LINUX is a registered trademark of Linus Torvalds.
+ChromeOS runs on Linux too.

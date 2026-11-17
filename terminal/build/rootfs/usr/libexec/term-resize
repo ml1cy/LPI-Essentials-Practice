@@ -1,0 +1,10 @@
+#!/bin/sh
+# The web page sends "ROWS COLS" lines on the second serial port whenever the
+# terminal panel changes size. Apply them to the console so programs such as
+# less, vi and top use the whole panel.
+exec 3<>/dev/ttyS1
+stty -echo <&3
+echo ready >&3
+while read -r rows cols <&3; do
+  stty -F /dev/ttyS0 rows "$rows" cols "$cols" 2>/dev/null
+done

@@ -1,0 +1,2 @@
+This is ~/Documents/notes.txt.
+From ~/Downloads, the relative path ../Documents/ leads here.

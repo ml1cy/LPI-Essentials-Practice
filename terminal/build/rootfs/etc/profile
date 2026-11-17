@@ -1,0 +1,27 @@
+# /etc/profile: read by every login shell.
+export PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/sbin:/usr/sbin:/sbin
+export TERM=xterm-256color
+export PAGER=less
+export EDITOR=vi
+umask 022
+
+# user@host:directory$ for users, # for root
+PS1='\[\e[1;32m\]\u@\h\[\e[0m\]:\[\e[1;34m\]\w\[\e[0m\]\$ '
+
+alias ls='ls --color=auto'
+alias ll='ls -l'
+alias la='ls -A'
+
+# Welcome text for the console login (not for su), wrapped to the panel width.
+# The page sends the size just after boot, so give it a moment to arrive.
+if [ "$PPID" = 1 ] && [ -r /etc/welcome ]; then
+  tries=0
+  while [ "$(stty size 2>/dev/null)" = "0 0" ] && [ $tries -lt 20 ]; do
+    sleep 0.1
+    tries=$((tries + 1))
+  done
+  cols=$(stty size 2>/dev/null | cut -d' ' -f2)
+  [ "${cols:-0}" -gt 0 ] || cols=80
+  fold -s -w "$cols" /etc/welcome
+  unset tries cols
+fi

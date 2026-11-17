@@ -1,0 +1,3 @@
+#!/bin/sh
+# No info documents are installed here; fall back to man (built-in --help).
+exec man "$@"

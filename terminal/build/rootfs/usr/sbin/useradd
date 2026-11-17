@@ -1,0 +1,43 @@
+#!/bin/sh
+# BusyBox has adduser instead of useradd. This translates the common useradd
+# options so exam-style commands such as `useradd -m tux` work.
+usage() {
+  echo "Usage: useradd [-m|-M] [-d HOME] [-s SHELL] [-c COMMENT] [-u UID] [-g GROUP] [-G GROUP[,GROUP]] [-k SKEL] LOGIN" >&2
+  exit 2
+}
+create_home=no home= shell=/bin/bash comment= uid= group= groups= skel=/etc/skel
+while getopts "mMd:s:c:u:g:G:k:" opt; do
+  case $opt in
+    m) create_home=yes ;;
+    M) create_home=no ;;
+    d) home=$OPTARG ;;
+    s) shell=$OPTARG ;;
+    c) comment=$OPTARG ;;
+    u) uid=$OPTARG ;;
+    g) group=$OPTARG ;;
+    G) groups=$OPTARG ;;
+    k) skel=$OPTARG ;;
+    *) usage ;;
+  esac
+done
+shift $((OPTIND - 1))
+[ $# -eq 1 ] || usage
+login=$1
+
+if [ "$(id -u)" -ne 0 ]; then
+  echo "useradd: Permission denied." >&2
+  echo "useradd: cannot lock /etc/passwd; try again later." >&2
+  exit 1
+fi
+
+set -- -D -s "$shell" -h "${home:-/home/$login}"
+if [ $create_home = yes ]; then set -- "$@" -k "$skel"; else set -- "$@" -H; fi
+[ -n "$comment" ] && set -- "$@" -g "$comment"
+[ -n "$uid" ] && set -- "$@" -u "$uid"
+[ -n "$group" ] && set -- "$@" -G "$group"
+adduser "$@" "$login" || exit
+
+IFS=,
+for extra in $groups; do
+  addgroup "$login" "$extra" || exit
+done

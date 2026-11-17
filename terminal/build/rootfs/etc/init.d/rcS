@@ -1,0 +1,9 @@
+#!/bin/sh
+# Boot script: mount the virtual file systems and prepare the login records.
+mount -t devtmpfs devtmpfs /dev
+mkdir -p /dev/pts /dev/shm
+mount -a
+hostname -F /etc/hostname
+touch /run/utmp /var/log/wtmp
+chgrp utmp /run/utmp /var/log/wtmp
+chmod 664 /run/utmp /var/log/wtmp

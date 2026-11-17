@@ -1,0 +1,12 @@
+#!/bin/sh
+# BusyBox has no sudo. This stand-in runs the command as root through su,
+# so it asks for root's password (root) rather than yours.
+if [ $# -eq 0 ]; then
+  echo "usage: sudo COMMAND [ARGUMENT...]" >&2
+  exit 1
+fi
+cmd=
+for arg in "$@"; do
+  cmd="$cmd '$(printf '%s' "$arg" | sed "s/'/'\\\\''/g")'"
+done
+exec su root -c "$cmd"

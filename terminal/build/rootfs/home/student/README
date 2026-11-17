@@ -1,0 +1,27 @@
+Practice files for the LPI Essentials questions
+-----------------------------------------------
+
+test.sh          A script without the execute bit. Run ./test.sh,
+                 fix it with chmod, and run it again. Also try
+                 bash test.sh.
+script.sh        Prints $MYVAR. Compare "MYVAR=value; ./script.sh"
+                 with "export MYVAR=value; ./script.sh".
+Downloads/       An empty directory. Try rm, rmdir and rm -r on it.
+Documents/       From ~/Downloads, which directory does
+                 ls ../Documents/ show?
+texts/           "texts 1.txt", "texts 2.txt" and "texts 3.csv".
+                 Which glob copies only the .txt files to /tmp/?
+loop/            a.txt, b.txt and c.cav, for:
+                 for file in *.txt; do echo $file; done
+Texts 2.txt      A name with a space. How many ways can you cat it?
+data.csv         Unsorted lines for sort, wc, head, tail and cut.
+operating-systems.txt
+                 For grep, grep -i and grep -c.
+work/            A directory to archive with tar, gzip and bzip2,
+                 and to list with ls -R.
+doku.odt         Make tux its owner. Create the user first, as root:
+                 su -, then useradd -m tux.
+
+Also worth a look: ls -l /tmp, ls /proc, cat /etc/passwd, id,
+ls -l /etc/skel, free -h, top, dmesg | head, last, echo $PATH,
+find /home -name '*.txt'.

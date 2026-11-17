@@ -1,0 +1,9 @@
+
+Welcome to the LPI Essentials practice terminal.
+
+This is a real Linux kernel with BusyBox tools, running in your browser. You're logged in as "student". The root password is "root": use "su -" or "sudo COMMAND" for admin tasks.
+
+Practice files for the exam questions are in your home directory. Start with "cat README".
+
+BusyBox versions of some commands differ slightly from the GNU versions; "COMMAND --help" shows what a command supports. Nothing here reaches the network, and everything resets when you reload the page.
+
